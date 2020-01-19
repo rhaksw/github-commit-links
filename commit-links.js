@@ -10,12 +10,23 @@
 
 (function() {
     'use strict';
+    var hasPath = document.querySelector('.final-path');
 
     document.querySelectorAll('.sha').forEach(link => {
         var blobLink = link.cloneNode(true);
-        var parts = link.href.split('#').slice(0,-1).join('#').split('/');
+        var hashParts = link.href.split('#');
+        var parts = hashParts.slice(0,-1);
+        if (hashParts.length === 1) {
+            parts = hashParts;
+        }
+        parts = parts.join('#').split('/')
         var suffix = window.location.pathname.split('/').slice(5).join('/');
-        parts[parts.length-2] = 'blob';
+        if (hasPath) {
+            parts[parts.length-2] = 'blob';
+        } else {
+            // special case for root directory history view
+            parts[parts.length-2] = 'tree';
+        }
         blobLink.href = parts.join('/')+'/'+suffix;
         blobLink.innerHTML = 'blob';
         link.parentNode.insertBefore(blobLink, null);
