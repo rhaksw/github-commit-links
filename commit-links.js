@@ -12,7 +12,7 @@
     'use strict';
     var hasPath = document.querySelector('.final-path');
 
-    document.querySelectorAll('.sha').forEach(link => {
+    document.querySelectorAll('a.btn[href*="/commit/"]').forEach(link => {
         var blobLink = link.cloneNode(true);
         var hashParts = link.href.split('#');
         var parts = hashParts.slice(0,-1);
